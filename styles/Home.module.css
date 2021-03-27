@@ -1,0 +1,60 @@
+.resulte {
+  display: flex;
+  flex-wrap: wrap;
+  overflow: auto;
+}
+.body {
+  padding: 20px;
+}
+.body input[type="text"] {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  width: 50%;
+}
+.profite {
+  margin-left: 10px;
+}
+.body input {
+  margin: 10px;
+  display: block;
+}
+.resulte ul {
+  background-color: #fff;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  list-style: none;
+}
+.container {
+  width: 100%;
+  height: 100vh;
+  background-color: #f1f1f1;
+}
+.home {
+  width: 100%;
+  min-height: 100%;
+  height: auto;
+  display: flex;
+}
+.home h3 {
+  cursor: pointer;
+}
+.Market {
+  flex: 0.5;
+  padding: 10px;
+  background-color: yellow;
+  overflow: auto;
+}
+.BlackMarket {
+  overflow: auto;
+  flex: 0.5;
+  padding: 10px;
+  background-color: black;
+  color: #fff;
+}
+.MarketItem {
+  border-bottom: 2px solid #fff;
+  border-radius: 5px;
+  margin: 5px 0;
+}
