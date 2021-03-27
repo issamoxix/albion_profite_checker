@@ -5,7 +5,6 @@ import styles from "../styles/Home.module.css";
 export default function Home() {
   const [item, setItem] = useState("T4_ARMOR_LEATHER_SET2");
   const [profite, setProfite] = useState({});
-
   const [data, setData] = useState([]);
   const [bmarket, setbmarket] = useState([]);
   const [market, setmarket] = useState([]);
@@ -60,6 +59,14 @@ export default function Home() {
             />
             <input type="submit" />
           </form>
+          <button
+            onClick={() => {
+              setmarket([]);
+              setbmarket([]);
+            }}
+          >
+            Reset Search
+          </button>
         </div>
 
         <div className={styles.home}>
