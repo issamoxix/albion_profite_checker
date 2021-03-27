@@ -98,7 +98,7 @@ export default function Home() {
       //   bag.prices.CM * bag.prices.BM != 0 && console.log(bag);
       // });
     });
-    console.log(bag);
+    // console.log(bag);
     return chanta;
   };
   return (
