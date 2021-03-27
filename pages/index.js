@@ -11,6 +11,8 @@ export default function Home() {
   const [q, setQ] = useState();
   const locations = ["Black Market", "Caerleon"];
 
+  const Totale = [...market, ...bmarket];
+
   const fetch_data = async (items, q) => {
     const res = await fetch(
       `/api/hello?items=${items}&locations=${locations.toString()}&q=${q}`
@@ -26,47 +28,128 @@ export default function Home() {
 
     setData(json);
   };
+  const Itemprofite = ({ haja }) => {
+    return (
+      <div className={styles.bodyitemprofite}>
+        <span> {haja.name} </span>
+        <span>Q: {haja.quality} </span>
+        <span>
+          Buy(<b>{haja.Buy}</b>){" "}
+        </span>
+        <span>
+          Sell(<b>{haja.Sell}</b>)
+        </span>
+        <span>
+          Profite(<b>{haja.profite}</b>){" "}
+        </span>
+      </div>
+    );
+  };
+  const handlecalc = () => {
+    let bag = {};
+    let chanta = [];
+    Totale.map((d) => {
+      if (bag[d.item_id] === undefined) {
+        bag[d.item_id] = {};
+      }
+      if (bag[d.item_id][`Q_${d.quality}`] === undefined) {
+        bag[d.item_id][`Q_${d.quality}`] = { prices: {} };
+      }
 
+      if (d.city == "Black Market") {
+        bag[d.item_id][`Q_${d.quality}`]["prices"]["BM"] = d.buy_price_max;
+      } else {
+        bag[d.item_id][`Q_${d.quality}`]["prices"]["CM"] = d.sell_price_min;
+      }
+      if (
+        bag[d.item_id][`Q_${d.quality}`]["prices"]["BM"] !== undefined &&
+        bag[d.item_id][`Q_${d.quality}`]["prices"]["CM"] !== undefined
+      ) {
+        bag[d.item_id][`Q_${d.quality}`]["prices"]["Profite"] =
+          bag[d.item_id][`Q_${d.quality}`]["prices"]["BM"] -
+          bag[d.item_id][`Q_${d.quality}`]["prices"]["CM"] -
+          bag[d.item_id][`Q_${d.quality}`]["prices"]["BM"] * 0.06;
+        if (
+          bag[d.item_id][`Q_${d.quality}`]["prices"]["Profite"] >= 500 &&
+          bag[d.item_id][`Q_${d.quality}`]["prices"]["CM"] != 0
+        ) {
+          chanta.push({
+            name: d.item_id,
+            quality: d.quality,
+            Buy: bag[d.item_id][`Q_${d.quality}`]["prices"]["CM"],
+            Sell: bag[d.item_id][`Q_${d.quality}`]["prices"]["BM"],
+            profite: bag[d.item_id][`Q_${d.quality}`]["prices"]["Profite"],
+          });
+        }
+      }
+      //   if (!bag.name) {
+      //     bag.name = d.item_id;
+      //   }
+      //   if (!bag.quality) {
+      //     bag.quality = d.quality;
+      //   }
+
+      //   if (bag.quality == d.quality && bag.name == d.item_id) {
+      //     bag.prices.BM =
+      //       d.city == "Black Market" && !bag.prices.BM && d.buy_price_max;
+      //     bag.prices.CM =
+      //       d.city != "Black Market" && !bag.prices.CM && d.sell_price_min;
+      //   }
+      //   bag.prices.CM * bag.prices.BM != 0 && console.log(bag);
+      // });
+    });
+    console.log(bag);
+    return chanta;
+  };
   return (
     <div className={styles.container}>
       <Head>
         <title>Albion Black Market heaven</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/albion.png" />
       </Head>
       <div className={styles.container}>
         <div className={styles.profite}>
-          <h1>Profite is {profite.buy - profite.sell - profite.buy * 0.06} </h1>
+          <h1 onClick={() => handlecalc()}>
+            Profite is {profite.buy - profite.sell - profite.buy * 0.06}{" "}
+          </h1>
           <button onClick={() => setProfite({})}>Reset</button>
         </div>
         <div className={styles.body}>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              fetch_data(item, q);
-            }}
-          >
-            <input
-              type="text"
-              placeholder="Items"
-              value={item}
-              onChange={(e) => setItem(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Quality"
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-            />
-            <input type="submit" />
-          </form>
-          <button
-            onClick={() => {
-              setmarket([]);
-              setbmarket([]);
-            }}
-          >
-            Reset Search
-          </button>
+          <div className={styles.bodyform}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                fetch_data(item, q);
+              }}
+            >
+              <input
+                type="text"
+                placeholder="Items"
+                value={item}
+                onChange={(e) => setItem(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Quality"
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+              />
+              <input type="submit" />
+            </form>
+            <button
+              onClick={() => {
+                setmarket([]);
+                setbmarket([]);
+              }}
+            >
+              Reset Search
+            </button>
+          </div>
+          <div className={styles.bodyprofite}>
+            {handlecalc().map((d) => (
+              <Itemprofite haja={d} />
+            ))}
+          </div>
         </div>
 
         <div className={styles.home}>
