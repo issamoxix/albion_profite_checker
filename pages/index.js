@@ -95,10 +95,10 @@ export default function Home() {
                 <h3>Quality : {d.quality} </h3>
                 <h3
                   onClick={() =>
-                    setProfite({ ...profite, buy: d.buy_price_min })
+                    setProfite({ ...profite, buy: d.buy_price_max })
                   }
                 >
-                  Buy : {d.buy_price_min}{" "}
+                  Buy : {d.buy_price_max}{" "}
                 </h3>
                 <h3>Sell : {d.sell_price_min} </h3>
               </div>
