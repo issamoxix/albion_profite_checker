@@ -11,8 +11,8 @@ export default function Home() {
   const [data, setData] = useState([]);
   const [bmarket, setbmarket] = useState([]);
   const [market, setmarket] = useState([]);
-  const [from, setfrom] = useState(0);
-  const [to, setto] = useState(20);
+  const [from, setfrom] = useState();
+  const [to, setto] = useState();
 
   const [q, setQ] = useState();
   const locations = ["Black Market", "Caerleon"];
@@ -47,20 +47,26 @@ export default function Home() {
   };
   const MasseSearch = async (man, tal) => {
     let arr = ItemsData.split(",");
-    console.log(man, tal);
-    console.log(arr.slice(man, tal));
-    if (tal >= arr.length) {
+    // console.log(man, tal);
+    // console.log(arr.slice(man, tal));
+    if (tal >= to) {
       return toast.success(`Automated Programme Stoped`);
     }
     await fetch_data(arr.slice(man, tal).toString(), q);
-    toast.success(`Progress  ${tal}/${arr.length} `);
+    toast.success(`Progress  ${tal}/${to} `);
     // setfrom(to);
     // setto(to + 20);
     MasseSearch(tal, tal + 20);
   };
   const Itemprofite = ({ haja }) => {
+    const [select, setSelect] = useState(false);
     return (
-      <div className={styles.bodyitemprofite}>
+      <div
+        onClick={() => setSelect(!select)}
+        className={`${styles.bodyitemprofite} ${
+          select && styles.selecteditem
+        } `}
+      >
         <span> {haja.name} </span>
         <span>Q: {haja.quality} </span>
         <span>
@@ -70,7 +76,7 @@ export default function Home() {
           Sell(<b>{haja.Sell}</b>)
         </span>
         <span>
-          Profite(<b>{haja.profite}</b>){" "}
+          Profite(<b>{haja.profite.toFixed(2)}</b>){" "}
         </span>
       </div>
     );
@@ -158,7 +164,23 @@ export default function Home() {
             <button onClick={() => get_items(JSON.parse(area))}>
               Masse Search
             </button>
-            <button onClick={() => MasseSearch(0, 20)}>Automate</button>
+            <input
+              type="text"
+              placeholder="From"
+              value={from}
+              onChange={(e) => setfrom(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="To"
+              value={to}
+              onChange={(e) => setto(e.target.value)}
+            />
+            <button
+              onClick={() => MasseSearch(parseInt(from), parseInt(from) + 20)}
+            >
+              Automate
+            </button>
             <button
               onClick={() => {
                 setmarket([]);
