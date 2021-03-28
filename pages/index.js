@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useState } from "react";
 import styles from "../styles/Home.module.css";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Home() {
   const [item, setItem] = useState("T4_ARMOR_LEATHER_SET2");
@@ -14,6 +15,7 @@ export default function Home() {
   const Totale = [...market, ...bmarket];
 
   const fetch_data = async (items, q) => {
+    const toastId = toast.loading("Loading...");
     const res = await fetch(
       `/api/hello?items=${items}&locations=${locations.toString()}&q=${q}`
     );
@@ -27,6 +29,14 @@ export default function Home() {
     });
 
     setData(json);
+    toast.success("Done !", { id: toastId });
+  };
+  const get_items = (data, inpt) => {
+    let totale = [];
+    for (let i = 0; i < Object.keys(data).length - 1; i++) {
+      totale.push(data[Object.keys(data)[i]].toString());
+    }
+    inpt.value = totale.toString();
   };
   const Itemprofite = ({ haja }) => {
     return (
@@ -82,23 +92,8 @@ export default function Home() {
           });
         }
       }
-      //   if (!bag.name) {
-      //     bag.name = d.item_id;
-      //   }
-      //   if (!bag.quality) {
-      //     bag.quality = d.quality;
-      //   }
-
-      //   if (bag.quality == d.quality && bag.name == d.item_id) {
-      //     bag.prices.BM =
-      //       d.city == "Black Market" && !bag.prices.BM && d.buy_price_max;
-      //     bag.prices.CM =
-      //       d.city != "Black Market" && !bag.prices.CM && d.sell_price_min;
-      //   }
-      //   bag.prices.CM * bag.prices.BM != 0 && console.log(bag);
-      // });
     });
-    // console.log(bag);
+
     return chanta;
   };
   return (
@@ -189,6 +184,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 }
