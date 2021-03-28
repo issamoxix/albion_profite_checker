@@ -3,6 +3,7 @@ import { useState } from "react";
 import styles from "../styles/Home.module.css";
 import toast, { Toaster } from "react-hot-toast";
 import { ItemsData } from "../data/items";
+import { SearchItems } from "../data/formated_items";
 
 export default function Home() {
   const [item, setItem] = useState("T4_ARMOR_LEATHER_SET2");
@@ -67,7 +68,18 @@ export default function Home() {
           select && styles.selecteditem
         } `}
       >
-        <span> {haja.name} </span>
+        <span
+          onClick={() => {
+            navigator.clipboard.writeText(SearchItems[haja.name]);
+            toast.success("Copied");
+          }}
+        >
+          {" "}
+          {SearchItems[haja.name]}{" "}
+        </span>
+        <span>
+          En( {haja.name.split("@")[1] ? haja.name.split("@")[1] : 0} )
+        </span>
         <span>Q: {haja.quality} </span>
         <span>
           Buy(<b>{haja.Buy}</b>){" "}
