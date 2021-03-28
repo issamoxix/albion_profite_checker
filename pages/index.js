@@ -47,7 +47,8 @@ export default function Home() {
   };
   const MasseSearch = async (man, tal) => {
     let arr = ItemsData.split(",");
-    // console.log(arr.slice(from, to));
+    console.log(man, tal);
+    console.log(arr.slice(man, tal));
     if (tal >= arr.length) {
       return toast.success(`Automated Programme Stoped`);
     }
@@ -55,7 +56,7 @@ export default function Home() {
     toast.success(`Progress  ${tal}/${arr.length} `);
     // setfrom(to);
     // setto(to + 20);
-    MasseSearch(tal, tal + tal);
+    MasseSearch(tal, tal + 20);
   };
   const Itemprofite = ({ haja }) => {
     return (
