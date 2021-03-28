@@ -1,3 +1,18 @@
+.light {
+  --bg: #f1f1f1;
+  --bginpt: #fff;
+  --profite: #fff;
+  --txt: #000;
+  --hoverprofite: #ddd;
+}
+.dark {
+  --bg: #23272a;
+  --bginpt: #2c2f33;
+  --profite: #2c2f33;
+  --txt: #fff;
+  --hoverprofite: #36393d;
+}
+
 .resulte {
   display: flex;
   flex-wrap: wrap;
@@ -28,7 +43,7 @@
   flex-direction: column;
   border-radius: 5px;
   overflow: auto;
-  background-color: #fff;
+  background-color: var(--profite);
   height: auto;
   align-self: center;
   width: 90%;
@@ -43,7 +58,8 @@
   border-bottom: 1px solid #f1f1f1;
 }
 .bodyitemprofite:hover {
-  background-color: #ddd;
+  background-color: var(--hoverprofite);
+  color: var(--txt);
 }
 
 .bodyitemprofite span {
@@ -53,11 +69,22 @@
   display: flex;
   align-items: center;
 }
+.bodyform textarea {
+  border: none;
+  color: var(--txt);
+  background-color: var(--bginpt);
+  outline: none;
+  padding: 10px;
+  margin: 0px 10px;
+}
 .body input[type="text"] {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   width: 50%;
+  outline: none;
+  color: var(--txt);
+  background-color: var(--bginpt);
 }
 .profite {
   margin-left: 30px;
@@ -80,8 +107,19 @@
   width: 100%;
   height: 100vh;
   display: flex;
+  color: var(--txt);
   flex-direction: column;
-  background-color: #f1f1f1;
+  background-color: var(--bg);
+  transition: background 0.3s linear;
+}
+.Switch {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  right: 5%;
+  top: 5%;
+  color: rgb(206, 203, 33);
+  cursor: pointer;
 }
 .home {
   width: 100%;

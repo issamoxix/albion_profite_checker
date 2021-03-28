@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import styles from "../styles/Home.module.css";
 import toast, { Toaster } from "react-hot-toast";
 import { ItemsData } from "../data/items";
@@ -134,8 +134,12 @@ export default function Home() {
 
     return chanta;
   };
+  const [mode, setmode] = useState(false);
   return (
-    <div className={styles.container}>
+    <div className={`${!mode ? styles.light : styles.dark}`}>
+      <div className={styles.Switch} onClick={() => setmode(!mode)}>
+        <img src="/svgs/mode.svg" />
+      </div>
       <Head>
         <title>Albion Black Market heaven</title>
         <link rel="icon" href="/albion.png" />
@@ -166,6 +170,7 @@ export default function Home() {
               />
               <input type="submit" value="Search" />
               <textarea
+                placeholder="Json of Items from github"
                 value={area}
                 onChange={(e) => setarea(e.target.value)}
               ></textarea>
