@@ -48,6 +48,9 @@ export default function Home() {
   const MasseSearch = async (man, tal) => {
     let arr = ItemsData.split(",");
     // console.log(arr.slice(from, to));
+    if (tal >= arr.length) {
+      return toast.success(`Automated Programme Stoped`);
+    }
     await fetch_data(arr.slice(man, tal).toString(), q);
     toast.success(`Progress  ${tal}/${arr.length} `);
     // setfrom(to);
