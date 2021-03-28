@@ -142,10 +142,7 @@ export default function Home() {
       </Head>
       <div className={styles.container}>
         <div className={styles.profite}>
-          <h1 onClick={() => handlecalc()}>
-            Profite is {profite.buy - profite.sell - profite.buy * 0.06}{" "}
-          </h1>
-          <button onClick={() => setProfite({})}>Reset</button>
+          <h1>Profite Checker</h1>
         </div>
         <div className={styles.body}>
           <div className={styles.bodyform}>
@@ -163,11 +160,11 @@ export default function Home() {
               />
               <input
                 type="text"
-                placeholder="Quality"
+                placeholder="Quality from 1 to 5"
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
               />
-              <input type="submit" />
+              <input type="submit" value="Search" />
               <textarea
                 value={area}
                 onChange={(e) => setarea(e.target.value)}
@@ -202,14 +199,14 @@ export default function Home() {
               Reset Search
             </button>
           </div>
-          <div className={styles.bodyprofite}>
-            {handlecalc().map((d) => (
-              <Itemprofite haja={d} />
-            ))}
-          </div>
+        </div>
+        <div className={styles.bodyprofite}>
+          {handlecalc().map((d) => (
+            <Itemprofite haja={d} />
+          ))}
         </div>
 
-        <div className={styles.home}>
+        {/* <div className={styles.home}>
           <div className={styles.Market}>
             <h1>Market</h1>
             {market.map((d) => (
@@ -245,6 +242,7 @@ export default function Home() {
             ))}
           </div>
         </div>
+       */}
       </div>
       <Toaster />
     </div>
