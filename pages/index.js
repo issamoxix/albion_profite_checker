@@ -50,7 +50,7 @@ export default function Home() {
     let arr = ItemsData.split(",");
     // console.log(man, tal);
     // console.log(arr.slice(man, tal));
-    if (tal >= to) {
+    if (tal >= to || tal >= arr.length) {
       return toast.success(`Automated Programme Stoped`);
     }
     await fetch_data(arr.slice(man, tal).toString(), q);
