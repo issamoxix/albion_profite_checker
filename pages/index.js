@@ -5,10 +5,12 @@ import toast, { Toaster } from "react-hot-toast";
 
 export default function Home() {
   const [item, setItem] = useState("T4_ARMOR_LEATHER_SET2");
+  const [area, setarea] = useState();
   const [profite, setProfite] = useState({});
   const [data, setData] = useState([]);
   const [bmarket, setbmarket] = useState([]);
   const [market, setmarket] = useState([]);
+
   const [q, setQ] = useState();
   const locations = ["Black Market", "Caerleon"];
 
@@ -31,12 +33,13 @@ export default function Home() {
     setData(json);
     toast.success("Done !", { id: toastId });
   };
-  const get_items = (data, inpt) => {
+  const get_items = (data) => {
     let totale = [];
+
     for (let i = 0; i < Object.keys(data).length - 1; i++) {
       totale.push(data[Object.keys(data)[i]].toString());
     }
-    inpt.value = totale.toString();
+    setItem(totale.toString());
   };
   const Itemprofite = ({ haja }) => {
     return (
@@ -130,7 +133,14 @@ export default function Home() {
                 onChange={(e) => setQ(e.target.value)}
               />
               <input type="submit" />
+              <textarea
+                value={area}
+                onChange={(e) => setarea(e.target.value)}
+              ></textarea>
             </form>
+            <button onClick={() => get_items(JSON.parse(area))}>
+              Masse Search
+            </button>
             <button
               onClick={() => {
                 setmarket([]);
