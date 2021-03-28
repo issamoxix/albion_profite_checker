@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useState } from "react";
 import styles from "../styles/Home.module.css";
 import toast, { Toaster } from "react-hot-toast";
+import { ItemsData } from "../data/items";
 
 export default function Home() {
   const [item, setItem] = useState("T4_ARMOR_LEATHER_SET2");
@@ -10,6 +11,8 @@ export default function Home() {
   const [data, setData] = useState([]);
   const [bmarket, setbmarket] = useState([]);
   const [market, setmarket] = useState([]);
+  const [from, setfrom] = useState(0);
+  const [to, setto] = useState(20);
 
   const [q, setQ] = useState();
   const locations = ["Black Market", "Caerleon"];
@@ -39,7 +42,17 @@ export default function Home() {
     for (let i = 0; i < Object.keys(data).length - 1; i++) {
       totale.push(data[Object.keys(data)[i]].toString());
     }
+
     setItem(totale.toString());
+  };
+  const MasseSearch = async (man, tal) => {
+    let arr = ItemsData.split(",");
+    // console.log(arr.slice(from, to));
+    await fetch_data(arr.slice(man, tal).toString(), q);
+    toast.success(`Progress  ${tal}/${arr.length} `);
+    // setfrom(to);
+    // setto(to + 20);
+    MasseSearch(tal, tal + tal);
   };
   const Itemprofite = ({ haja }) => {
     return (
@@ -141,6 +154,7 @@ export default function Home() {
             <button onClick={() => get_items(JSON.parse(area))}>
               Masse Search
             </button>
+            <button onClick={() => MasseSearch(0, 20)}>Automate</button>
             <button
               onClick={() => {
                 setmarket([]);
