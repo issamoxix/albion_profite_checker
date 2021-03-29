@@ -2,7 +2,7 @@ const https = require("https");
 const sdc = async (items, locations, qualities) => {
   let dataString = "";
 
-  let url = `https://www.albion-online-data.com/api/v2/stats/prices/${items}?locations=${locations}&qualities=${qualities}`;
+  let url = `https://www.albion-online-data.com/api/v2/stats/prices/${items}?locations=${locations}&qualities=${qualities}&time-scale=1`;
   const response = await new Promise((resolve, reject) => {
     const req = https.get(url, function (res) {
       res.on("data", (chunk) => {
