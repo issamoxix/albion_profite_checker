@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import styles from "../styles/Home.module.css";
 import toast, { Toaster } from "react-hot-toast";
 import { ItemsData } from "../data/items";
@@ -60,7 +60,7 @@ export default function Home() {
     // setto(to + 20);
     MasseSearch(tal, tal + 20);
   };
-  const Itemprofite = ({ haja }) => {
+  const Itemprofite = useCallback(({ haja }) => {
     const [select, setSelect] = useState(false);
     return (
       <div
@@ -93,7 +93,7 @@ export default function Home() {
         </span>
       </div>
     );
-  };
+  }, []);
   const handlecalc = () => {
     let bag = {};
     let chanta = [];
