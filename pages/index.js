@@ -21,8 +21,8 @@ export default function Home() {
 
   const Totale = [...market, ...bmarket];
 
-  const fetch_data = async (items, q) => {
-    const toastId = toast.loading("Loading...");
+  const fetch_data = async (items, q, auto = false) => {
+    const toastId = !auto && toast.loading("Loading...");
     const res = await fetch(
       `/api/hello?items=${items}&locations=${locations.toString()}&q=${q}`
     );
@@ -36,7 +36,7 @@ export default function Home() {
     });
 
     setData(json);
-    toast.success("Done !", { id: toastId });
+    !auto && toast.success("Done !", { id: toastId });
   };
   const get_items = (data) => {
     let totale = [];
@@ -47,15 +47,35 @@ export default function Home() {
 
     setItem(totale.toString());
   };
+  const handlemessage = () => {
+    let loading = toast.loading("Loading ...", {
+      style: {
+        position: "absolute",
+        right: "0%",
+      },
+    });
+    return loading;
+  };
   const MasseSearch = async (man, tal) => {
     let arr = ItemsData.split(",");
     // console.log(man, tal);
     // console.log(arr.slice(man, tal));
     if (tal >= to || tal >= arr.length) {
-      return toast.success(`Automated Programme Stoped`);
+      return toast.success(`Automated Programme Stoped`, {
+        id: handlemessage(),
+        style: {
+          position: "absolute",
+          right: "0%",
+        },
+      });
     }
-    await fetch_data(arr.slice(man, tal).toString(), q);
-    toast.success(`Progress  ${tal}/${to} `);
+    await fetch_data(arr.slice(man, tal).toString(), q, true);
+    toast.success(`Progress  ${tal}/${to} `, {
+      style: {
+        position: "absolute",
+        right: "0%",
+      },
+    });
     // setfrom(to);
     // setto(to + 20);
     MasseSearch(tal, tal + 20);
@@ -192,7 +212,10 @@ export default function Home() {
               onChange={(e) => setto(e.target.value)}
             />
             <button
-              onClick={() => MasseSearch(parseInt(from), parseInt(from) + 20)}
+              onClick={() => {
+                MasseSearch(parseInt(from), parseInt(from) + 20);
+                handlemessage();
+              }}
             >
               Automate
             </button>
