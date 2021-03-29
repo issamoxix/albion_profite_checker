@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  background-color: #23272a;
+  color: #ddd;
+}
+.body input[type="text"] {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  width: 50%;
+  outline: none;
+  color: #fff;
+  background-color: #2c2f33;
+  margin: 5px 0px;
+  width: 100%;
+  display: block;
+}
+.body button {
+  background-color: #2c2f33;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 10px 0px;
+  color: #fff;
+  display: block;
+}

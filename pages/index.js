@@ -14,6 +14,7 @@ export default function Home() {
   const [market, setmarket] = useState([]);
   const [from, setfrom] = useState();
   const [to, setto] = useState();
+  const [more, setMore] = useState(false);
 
   const [q, setQ] = useState();
   const locations = ["Black Market", "Caerleon"];
@@ -144,7 +145,7 @@ export default function Home() {
         <title>Albion Black Market heaven</title>
         <link rel="icon" href="/albion.png" />
       </Head>
-      <div className={styles.container}>
+      <div className={`${styles.container} ${!more && styles.flex}`}>
         <div className={styles.profite}>
           <h1>Profite Checker</h1>
         </div>
@@ -205,6 +206,7 @@ export default function Home() {
             </button>
           </div>
         </div>
+        <button onClick={() => setMore(!more)}>Press To Stretch </button>
         <div className={styles.bodyprofite}>
           {handlecalc().map((d) => (
             <Itemprofite haja={d} />
