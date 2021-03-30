@@ -93,6 +93,11 @@
   justify-content: space-evenly;
   border-bottom: 1px solid #f1f1f1;
 }
+@media (max-width: 780px) {
+  .bodyitemprofite {
+    flex-direction: column;
+  }
+}
 .bodyitemprofite:hover {
   background-color: var(--hoverprofite);
   color: var(--txt);
