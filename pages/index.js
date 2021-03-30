@@ -4,6 +4,7 @@ import styles from "../styles/Home.module.css";
 import toast, { Toaster } from "react-hot-toast";
 import { ItemsData } from "../data/items";
 import { SearchItems } from "../data/formated_items";
+import Navbar from "../Components/Navbar";
 
 export default function Home() {
   const [item, setItem] = useState("T4_ARMOR_LEATHER_SET2");
@@ -157,18 +158,13 @@ export default function Home() {
   };
   const [mode, setmode] = useState(false);
   return (
-    <div className={`${!mode ? styles.light : styles.dark}`}>
-      <div className={styles.Switch} onClick={() => setmode(!mode)}>
-        <img src="/svgs/mode.svg" />
-      </div>
+    <div className={`${mode ? styles.light : styles.dark}`}>
       <Head>
         <title>Albion Black Market heaven</title>
         <link rel="icon" href="/albion.png" />
       </Head>
       <div className={`${styles.container} ${!more && styles.flex}`}>
-        <div className={styles.profite}>
-          <h1>Profite Checker</h1>
-        </div>
+        <Navbar setmode={setmode} styles={styles} mode={mode} />
         <div className={styles.body}>
           <div className={styles.bodyform}>
             <form
@@ -190,51 +186,60 @@ export default function Home() {
                 onChange={(e) => setQ(e.target.value)}
               />
               <input type="submit" value="Search" />
-              <textarea
+              {/* <textarea
                 placeholder="Json of Items from github"
                 value={area}
                 onChange={(e) => setarea(e.target.value)}
-              ></textarea>
+              ></textarea> */}
             </form>
-            <button onClick={() => get_items(JSON.parse(area))}>
+            <form onSubmit={(e) => e.preventDefault()}>
+              {/* <button onClick={() => get_items(JSON.parse(area))}>
               Masse Search
-            </button>
-            <input
-              type="text"
-              placeholder="From"
-              value={from}
-              onChange={(e) => setfrom(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="To"
-              value={to}
-              onChange={(e) => setto(e.target.value)}
-            />
-            <button
-              onClick={() => {
-                MasseSearch(parseInt(from), parseInt(from) + 20);
-                handlemessage();
-              }}
-            >
-              Automate
-            </button>
-            <button
-              onClick={() => {
-                setmarket([]);
-                setbmarket([]);
-              }}
-            >
-              Reset Search
-            </button>
+            </button> */}
+              <input
+                type="text"
+                placeholder="From"
+                value={from}
+                onChange={(e) => setfrom(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="To"
+                value={to}
+                onChange={(e) => setto(e.target.value)}
+              />
+              <button
+                onClick={() => {
+                  MasseSearch(parseInt(from), parseInt(from) + 20);
+                  handlemessage();
+                }}
+              >
+                Automate
+              </button>
+              <button
+                onClick={() => {
+                  setmarket([]);
+                  setbmarket([]);
+                }}
+              >
+                Reset Search
+              </button>
+            </form>
           </div>
         </div>
-        <button onClick={() => setMore(!more)}>Press To Stretch </button>
-        <div className={styles.bodyprofite}>
-          {handlecalc().map((d) => (
-            <Itemprofite haja={d} />
-          ))}
-        </div>
+        {Totale.length > 0 && (
+          <div className={styles.bodyprofite}>
+            <img
+              onClick={() => setMore(!more)}
+              className={styles.moresvg}
+              src="/svgs/down.svg"
+              alt="Stretch"
+            />
+            {handlecalc().map((d) => (
+              <Itemprofite haja={d} />
+            ))}
+          </div>
+        )}
 
         {/* <div className={styles.home}>
           <div className={styles.Market}>

@@ -1,15 +1,19 @@
 import Head from "next/head";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import Navbar from "../Components/Navbar";
 import styles from "../styles/Calc.module.css";
+import { useRouter } from "next/router";
+import { route } from "next/dist/next-server/server/router";
 
 function calc() {
   const [C, setC] = useState();
   const [B, setB] = useState();
   const [buck, setbuck] = useState([{}]);
   const [Profite, setProfite] = useState();
-
+  const router = useRouter();
   const Itemslist = useCallback(({ d }) => {
     const [hide, setHide] = useState(false);
+    const [slash, setSlash] = useState(false);
     const li = useRef();
     return (
       <li
@@ -18,10 +22,15 @@ function calc() {
         onMouseLeave={() => setHide(false)}
       >
         {" "}
-        {d.prof}{" "}
+        <span className={slash && styles.slash}>{d.prof} </span>
         {hide && (
-          <button onClick={() => li.current.remove()} className={styles.rmvbtn}>
-            Remove
+          <button
+            onMouseOver={() => setSlash(true)}
+            onMouseLeave={() => setSlash(false)}
+            onClick={() => li.current.remove()}
+            className={styles.rmvbtn}
+          >
+            X
           </button>
         )}{" "}
       </li>
@@ -39,6 +48,7 @@ function calc() {
         <title>Black Market Profite Calculator</title>
         <link rel="icon" href="/albion.png" />
       </Head>
+
       <div className={styles.body}>
         <label>Carlion Market</label>
         <input
@@ -62,6 +72,9 @@ function calc() {
           </ul>
         )}
       </div>
+      <button onClick={() => router.push("/")} className={styles.back}>
+        Back
+      </button>
     </div>
   );
 }

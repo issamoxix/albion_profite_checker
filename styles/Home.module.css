@@ -4,8 +4,12 @@
   --profite: #fff;
   --txt: #000;
   --hoverprofite: #ddd;
+  --nav: #000;
+  --navhover: darkgray;
 }
 .dark {
+  --navhover: #fff;
+  --nav: #ddd;
   --bg: #23272a;
   --bginpt: #2c2f33;
   --profite: #2c2f33;
@@ -35,8 +39,40 @@
   color: initial;
 }
 .bodyform {
-  /* flex: 0.6; */
+  width: 100%;
+  display: flex;
 }
+.bodyform form {
+  width: 100%;
+  /* background-color: #ddd; */
+  /* display: flex; */
+  /* flex-direction: column; */
+
+  margin-right: 10px;
+}
+.bodyform button,
+.bodyform input[type="submit"] {
+  background-color: var(--bginpt);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  /* margin: 10px 0px; */
+  margin-bottom: 10px;
+  color: var(--txt);
+  /* display: block; */
+  outline: none;
+  -webkit-box-shadow: 10px 10px 5px -8px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 5px -8px rgba(0, 0, 0, 0.75);
+  box-shadow: 10px 10px 5px -8px rgba(0, 0, 0, 0.75);
+  transition: transform, box-shadow 0.3s, 0.3s linear;
+}
+.bodyform button:hover,
+.bodyform input[type="submit"]:hover {
+  -webkit-box-shadow: 10px 10px 5px -4px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 5px -4px rgba(0, 0, 0, 0.75);
+  box-shadow: 10px 10px 5px -4px rgba(0, 0, 0, 0.75);
+}
+
 .bodyprofite {
   /* flex: 0.4; */
   display: flex;
@@ -87,7 +123,33 @@
   background-color: var(--bginpt);
 }
 .profite {
-  margin-left: 30px;
+  /* margin-left: 30px; */
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+}
+.navbar {
+  margin-left: auto;
+  margin-right: 20px;
+}
+.navbar ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+.navbar ul li {
+  margin: 0px 10px;
+  color: var(--nav);
+}
+.navbar ul li:hover {
+  color: var(--navhover);
+  text-decoration: underline;
+}
+.profite h1 {
+  cursor: pointer;
 }
 .body button {
   margin-left: 10px;
@@ -116,13 +178,14 @@
   height: 100vh;
 }
 .Switch {
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  right: 5%;
-  top: 5%;
-  color: rgb(206, 203, 33);
+  height: 80%;
+  display: flex;
+  align-items: center;
   cursor: pointer;
+}
+.Switch img {
+  height: 92%;
+  height: 100%;
 }
 .home {
   width: 100%;
@@ -152,4 +215,22 @@
   border-radius: 5px;
   margin: 5px 0;
   color: #fff;
+}
+.moresvg {
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  right: 1%;
+  cursor: pointer;
+}
+@media (max-width: 780px) {
+  .profite h1 {
+    font-size: 100%;
+  }
+  .bodyform {
+    flex-wrap: wrap;
+  }
+  .bodyform input[type="text"] {
+    width: 100%;
+  }
 }
