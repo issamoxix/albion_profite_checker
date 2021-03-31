@@ -21,7 +21,15 @@ export default function Home() {
   const locations = ["Black Market", "Caerleon"];
 
   const Totale = [...market, ...bmarket];
+  const get_Date = () => {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, "0");
+    var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    var yyyy = today.getFullYear();
 
+    today = yyyy + "-" + mm + "-" + dd;
+    return today;
+  };
   const fetch_data = async (items, q, auto = false) => {
     const toastId = !auto && toast.loading("Loading...");
     const res = await fetch(
@@ -29,9 +37,12 @@ export default function Home() {
     );
     const json = await res.json();
     json.map((d) => {
-      if (d.city == "Black Market") {
+      if (
+        d.city == "Black Market" &&
+        d.buy_price_max_date.includes(get_Date())
+      ) {
         setbmarket((f) => [...f, d]);
-      } else {
+      } else if (d.sell_price_min_date.includes(get_Date())) {
         setmarket((f) => [...f, d]);
       }
     });
@@ -115,6 +126,7 @@ export default function Home() {
       </div>
     );
   }, []);
+
   const handlecalc = () => {
     let bag = {};
     let chanta = [];
