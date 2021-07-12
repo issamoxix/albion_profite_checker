@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "../styles/Home.module.css";
 import toast, { Toaster } from "react-hot-toast";
 import { ItemsData } from "../data/items";
@@ -8,18 +8,19 @@ import Navbar from "../Components/Navbar";
 
 export default function Home() {
   const [item, setItem] = useState("T4_ARMOR_LEATHER_SET2");
-  const [area, setarea] = useState();
-  const [profite, setProfite] = useState({});
+  const [lenprof, setlenprof] = useState(0);
   const [data, setData] = useState([]);
   const [bmarket, setbmarket] = useState([]);
   const [market, setmarket] = useState([]);
-  const [from, setfrom] = useState();
-  const [to, setto] = useState();
+  const [from, setfrom] = useState(1000);
+  const [to, setto] = useState(2000);
   const [more, setMore] = useState(false);
-
+  const [profi, setpro] = useState(500);
   const [q, setQ] = useState();
   const locations = ["Black Market", "Caerleon"];
-
+  useEffect(() => {
+    setto(parseInt(from) + 1000);
+  }, [from]);
   const Totale = [...market, ...bmarket];
   const get_Date = () => {
     var today = new Date();
@@ -114,10 +115,20 @@ export default function Home() {
           En( {haja.name.split("@")[1] ? haja.name.split("@")[1] : 0} )
         </span>
         <span>Q: {haja.quality} </span>
-        <span>
+        <span
+          onClick={() => {
+            navigator.clipboard.writeText(haja.Buy);
+            toast.success("Copied");
+          }}
+        >
           Buy(<b>{haja.Buy}</b>){" "}
         </span>
-        <span>
+        <span
+          onClick={() => {
+            navigator.clipboard.writeText(haja.Sell);
+            toast.success("Copied");
+          }}
+        >
           Sell(<b>{haja.Sell}</b>)
         </span>
         <span>
@@ -126,10 +137,10 @@ export default function Home() {
       </div>
     );
   }, []);
-
-  const handlecalc = () => {
+  let chanta = [];
+  const handlecalc = (profite = 500) => {
     let bag = {};
-    let chanta = [];
+
     Totale.map((d) => {
       if (bag[d.item_id] === undefined) {
         bag[d.item_id] = {};
@@ -152,7 +163,8 @@ export default function Home() {
           bag[d.item_id][`Q_${d.quality}`]["prices"]["CM"] -
           bag[d.item_id][`Q_${d.quality}`]["prices"]["BM"] * 0.06;
         if (
-          bag[d.item_id][`Q_${d.quality}`]["prices"]["Profite"] >= 500 &&
+          bag[d.item_id][`Q_${d.quality}`]["prices"]["Profite"] >=
+            parseInt(profite) &&
           bag[d.item_id][`Q_${d.quality}`]["prices"]["CM"] != 0
         ) {
           chanta.push({
@@ -165,14 +177,19 @@ export default function Home() {
         }
       }
     });
-
     return chanta;
   };
+  useEffect(() => {
+    setlenprof(chanta.length);
+  }, [chanta]);
   const [mode, setmode] = useState(false);
   return (
     <div className={`${mode ? styles.light : styles.dark}`}>
       <Head>
-        <title>Albion Black Market heaven</title>
+        <title>
+          {" "}
+          {lenprof != 0 ? `(${lenprof})` : ""} Albion Black Market heaven
+        </title>
         <link rel="icon" href="/albion.png" />
       </Head>
       <div className={`${styles.container} ${!more && styles.flex}`}>
@@ -220,6 +237,11 @@ export default function Home() {
                 value={to}
                 onChange={(e) => setto(e.target.value)}
               />
+              <input
+                type="text"
+                placeholder="Profite 500"
+                onChange={(e) => setpro(e.target.value)}
+              />
               <button
                 onClick={() => {
                   MasseSearch(parseInt(from), parseInt(from) + 20);
@@ -247,7 +269,7 @@ export default function Home() {
               src="/svgs/down.svg"
               alt="Stretch"
             />
-            {handlecalc().map((d) => (
+            {handlecalc(profi).map((d) => (
               <Itemprofite haja={d} />
             ))}
           </div>
