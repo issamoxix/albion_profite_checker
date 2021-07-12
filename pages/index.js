@@ -114,7 +114,9 @@ export default function Home() {
         <span>
           En( {haja.name.split("@")[1] ? haja.name.split("@")[1] : 0} )
         </span>
-        <span>Q: {haja.quality} </span>
+        <span style={{ color: parseInt(haja.quality) == 1 && "red" }}>
+          Q: {haja.quality}{" "}
+        </span>
         <span
           onClick={() => {
             navigator.clipboard.writeText(haja.Buy);
@@ -183,6 +185,7 @@ export default function Home() {
         }
       }
     });
+    // console.log(bag);
     return chanta;
   };
   useEffect(() => {
