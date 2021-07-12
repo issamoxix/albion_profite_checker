@@ -128,10 +128,16 @@ export default function Home() {
             navigator.clipboard.writeText(haja.Sell);
             toast.success("Copied");
           }}
+          style={{ color: parseInt(haja.Sell) / 10000 < 10 && "blue" }}
         >
           Sell(<b>{haja.Sell}</b>)
         </span>
-        <span>
+        <span
+          style={{
+            color:
+              parseInt(haja.profite.toFixed(2)) / parseInt(profi) < 10 && "red",
+          }}
+        >
           Profite(<b>{haja.profite.toFixed(2)}</b>){" "}
         </span>
       </div>
