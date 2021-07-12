@@ -17,6 +17,8 @@ export default function Home() {
   const [more, setMore] = useState(false);
   const [profi, setpro] = useState(500);
   const [q, setQ] = useState();
+  const [buyp, setbuy] = useState(0);
+
   const locations = ["Black Market", "Caerleon"];
   useEffect(() => {
     setto(parseInt(from) + 1000);
@@ -122,6 +124,11 @@ export default function Home() {
             navigator.clipboard.writeText(haja.Buy);
             toast.success("Copied");
           }}
+          style={{
+            color:
+              (parseInt(buyp) > 0) & (parseInt(haja.buy) <= parseInt(buyp)) &&
+              "red",
+          }}
         >
           Buy(<b>{haja.Buy}</b>){" "}
         </span>
@@ -191,6 +198,14 @@ export default function Home() {
   useEffect(() => {
     setlenprof(chanta.length);
   }, [chanta]);
+  useEffect(() => {
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-K4FCTP7ZC4");
+  }, []);
   const [mode, setmode] = useState(false);
   return (
     <div className={`${mode ? styles.light : styles.dark}`}>
@@ -200,6 +215,11 @@ export default function Home() {
           {lenprof != 0 ? `(${lenprof})` : ""} Albion Black Market heaven
         </title>
         <link rel="icon" href="/albion.png" />
+        {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-K4FCTP7ZC4"
+        ></script>
       </Head>
       <div className={`${styles.container} ${!more && styles.flex}`}>
         <Navbar setmode={setmode} styles={styles} mode={mode} />
@@ -250,6 +270,11 @@ export default function Home() {
                 type="text"
                 placeholder="Profite 500"
                 onChange={(e) => setpro(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Buy power"
+                onChange={(e) => setbuy(e.target.value)}
               />
               <button
                 onClick={() => {
