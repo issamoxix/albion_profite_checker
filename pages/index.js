@@ -198,14 +198,6 @@ export default function Home() {
   useEffect(() => {
     setlenprof(chanta.length);
   }, [chanta]);
-  useEffect(() => {
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag("js", new Date());
-    gtag("config", "G-K4FCTP7ZC4");
-  }, []);
   const [mode, setmode] = useState(false);
   return (
     <div className={`${mode ? styles.light : styles.dark}`}>
@@ -216,10 +208,6 @@ export default function Home() {
         </title>
         <link rel="icon" href="/albion.png" />
         {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-K4FCTP7ZC4"
-        ></script>
       </Head>
       <div className={`${styles.container} ${!more && styles.flex}`}>
         <Navbar setmode={setmode} styles={styles} mode={mode} />
