@@ -125,7 +125,7 @@ export default function Home() {
             toast.success("Copied");
           }}
           style={{
-            color: buyp >= parseInt(haja.Buy) && "red",
+            color: parseInt(buyp) >= parseInt(haja.Buy) && "red",
           }}
         >
           Buy(<b>{haja.Buy}</b>){" "}
