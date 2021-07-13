@@ -125,7 +125,7 @@ export default function Home() {
             toast.success("Copied");
           }}
           style={{
-            color: (buyp != 0) & (buyp >= parseInt(haja.Buy)) && "red",
+            color: buyp >= parseInt(haja.Buy) && "red",
           }}
         >
           Buy(<b>{haja.Buy}</b>){" "}
@@ -135,7 +135,7 @@ export default function Home() {
             navigator.clipboard.writeText(haja.Sell);
             toast.success("Copied");
           }}
-          style={{ color: parseInt(haja.Sell) / 10000 < 10 && "blue" }}
+          style={{ color: parseInt(haja.Sell) / 10000 < 10 && "red" }}
         >
           Sell(<b>{haja.Sell}</b>)
         </span>
