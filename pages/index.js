@@ -95,7 +95,7 @@ export default function Home() {
     // setto(to + 20);
     MasseSearch(tal, tal + 20);
   };
-  const Itemprofite = useCallback(({ haja }) => {
+  const Itemprofite = useCallback(({ haja, bp }) => {
     const [select, setSelect] = useState(false);
     return (
       <div
@@ -125,7 +125,7 @@ export default function Home() {
             toast.success("Copied");
           }}
           style={{
-            color: parseInt(buyp) >= parseInt(haja.Buy) && "red",
+            color: parseInt(bp) >= parseInt(haja.Buy) && "red",
           }}
         >
           Buy(<b>{haja.Buy}</b>){" "}
@@ -289,9 +289,9 @@ export default function Home() {
               src="/svgs/down.svg"
               alt="Stretch"
             />
-            {handlecalc(profi).map((d) => (
-              <Itemprofite haja={d} />
-            ))}
+            {handlecalc(profi).map((d) => {
+              return <Itemprofite bp={buyp} haja={d} />;
+            })}
           </div>
         )}
 
