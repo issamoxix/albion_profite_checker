@@ -103,6 +103,7 @@ export default function Home() {
         className={`${styles.bodyitemprofite} ${
           select && styles.selecteditem
         } `}
+        style={{ display: parseInt(bp) < parseInt(haja.Buy) && "none" }}
       >
         <span
           onClick={() => {
