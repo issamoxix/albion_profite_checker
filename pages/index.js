@@ -5,6 +5,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { ItemsData } from "../data/items";
 import { SearchItems } from "../data/formated_items";
 import Navbar from "../Components/Navbar";
+import * as gtag from "../lib/gtag";
 
 export default function Home() {
   const [item, setItem] = useState("T4_ARMOR_LEATHER_SET2");
@@ -19,6 +20,11 @@ export default function Home() {
   const [q, setQ] = useState();
   const [buyp, setbuy] = useState(0);
 
+  const handleevent = () => {
+    gtag.event({
+      action: "auto",
+    });
+  };
   const locations = ["Black Market", "Caerleon"];
   useEffect(() => {
     setto(parseInt(from) + 1000);
@@ -267,6 +273,7 @@ export default function Home() {
                 onClick={() => {
                   MasseSearch(parseInt(from), parseInt(from) + 20);
                   handlemessage();
+                  handleevent();
                 }}
               >
                 Automate
