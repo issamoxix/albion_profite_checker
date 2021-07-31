@@ -16,7 +16,9 @@ function Navbar({ setmode, styles, mode, silver, gain }) {
             <p>Silver : {silver}</p>
           </li>
           <li>
-            <p>Gain : {gain}</p>
+            <p>
+              Gain : <b style={{ color: "red" }}>{gain}</b>
+            </p>
           </li>
         </ul>
       </nav>
