@@ -52,18 +52,28 @@
 }
 .bodyform button,
 .bodyform input[type="submit"] {
-  background-color: var(--bginpt);
+  /* uncomment in the landing page dev */
+  /* background-color: rgba(230, 184, 56, 0.664);
   border: none;
   border-radius: 5px;
-  padding: 10px 20px;
-  /* margin: 10px 0px; */
-  margin-bottom: 10px;
   color: var(--txt);
-  /* display: block; */
   outline: none;
   -webkit-box-shadow: 10px 10px 5px -8px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 10px 10px 5px -8px rgba(0, 0, 0, 0.75);
   box-shadow: 10px 10px 5px -8px rgba(0, 0, 0, 0.75);
+  transition: transform, box-shadow 0.3s, 0.3s linear; */
+  /* margin: 10px 0px; */
+  /* margin-bottom: 10px ; delete in prod */
+  /* display: block; */
+  /* old styles delete down  */
+  background-color: var(--bginpt);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  color: var(--txt);
+  outline: none;
+  box-shadow: 10px 10px 5px -8px rgb(0 0 0 / 75%);
   transition: transform, box-shadow 0.3s, 0.3s linear;
 }
 .bodyform button:hover,
@@ -238,4 +248,69 @@
   .bodyform input[type="text"] {
     width: 100%;
   }
+}
+/* landing Page */
+.landingContainer {
+  height: 100vh;
+  background: url("/images/bg.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+}
+.landingContainerWrapper {
+  background-color: rgba(0, 0, 0, 0.349);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.bodyLanding {
+  color: #fff;
+  background-color: #2222229d;
+  border-radius: 5px;
+  width: 88%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: auto;
+}
+.bodyLanding input[type="text"] {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  width: 50%;
+  outline: none;
+  color: #fff;
+  background-color: #2c2f33;
+}
+.bodyLandingButton {
+  background-color: #2c2f33;
+  border: none;
+  border-radius: 5px;
+  padding: 2px 20px;
+  /* margin: 10px 0px; */
+  color: var(--txt);
+  /* display: block; */
+  outline: none;
+  -webkit-box-shadow: 10px 10px 5px -8px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 5px -8px rgba(0, 0, 0, 0.75);
+  box-shadow: 10px 10px 5px -8px rgba(0, 0, 0, 0.75);
+  transition: transform, box-shadow 0.3s, 0.3s linear;
+}
+.landingHeader {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
+  margin-bottom: auto;
+  margin-top: auto;
+}
+.landingHeader h1 {
+  margin-bottom: auto;
 }

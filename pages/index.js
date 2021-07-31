@@ -1,5 +1,7 @@
 import Head from "next/head";
 import { useCallback, useEffect, useRef, useState } from "react";
+import Cookie from "js-cookie";
+import { parseCookies } from "../lib/parseCookies";
 import styles from "../styles/Home.module.css";
 import toast, { Toaster } from "react-hot-toast";
 import { ItemsData } from "../data/items";
@@ -7,8 +9,8 @@ import { SearchItems } from "../data/formated_items";
 import Navbar from "../Components/Navbar";
 import * as gtag from "../lib/gtag";
 
-export default function Home() {
-  const [item, setItem] = useState("T4_ARMOR_LEATHER_SET2");
+export default function Home({ silverValue = 0, gainValue = 0 }) {
+  const [silver, setSilver] = useState(silverValue);
   const [lenprof, setlenprof] = useState(0);
   const [data, setData] = useState([]);
   const [bmarket, setbmarket] = useState([]);
@@ -19,6 +21,14 @@ export default function Home() {
   const [profi, setpro] = useState(500);
   const [q, setQ] = useState();
   const [buyp, setbuy] = useState(0);
+  const [gain, setGain] = useState(gainValue);
+  const silverinpt = useRef();
+  useEffect(() => {
+    Cookie.set("Silver", parseInt(silver));
+  }, [silver]);
+  useEffect(() => {
+    Cookie.set("Gain", parseInt(gain));
+  }, [gain]);
 
   const handleevent = () => {
     gtag.event({
@@ -59,15 +69,6 @@ export default function Home() {
     setData(json);
     !auto && toast.success("Done !", { id: toastId });
   };
-  const get_items = (data) => {
-    let totale = [];
-
-    for (let i = 0; i < Object.keys(data).length - 1; i++) {
-      totale.push(data[Object.keys(data)[i]].toString());
-    }
-
-    setItem(totale.toString());
-  };
   const handlemessage = () => {
     let loading = toast.loading("Loading ...", {
       style: {
@@ -79,8 +80,6 @@ export default function Home() {
   };
   const MasseSearch = async (man, tal) => {
     let arr = ItemsData.split(",");
-    // console.log(man, tal);
-    // console.log(arr.slice(man, tal));
     if (tal >= to || tal >= arr.length) {
       return toast.success(`Automated Programme Stoped`, {
         id: handlemessage(),
@@ -97,8 +96,6 @@ export default function Home() {
         right: "0%",
       },
     });
-    // setfrom(to);
-    // setto(to + 20);
     MasseSearch(tal, tal + 20);
   };
   const Itemprofite = useCallback(({ haja, bp }) => {
@@ -209,44 +206,40 @@ export default function Home() {
       <Head>
         <title>
           {" "}
-          {lenprof != 0 ? `(${lenprof})` : ""} Albion Black Market heaven
+          {lenprof != 0 ? `(${lenprof})` : ""} Albion Black Market heavan
         </title>
         <link rel="icon" href="/albion.png" />
         {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
       </Head>
       <div className={`${styles.container} ${!more && styles.flex}`}>
-        <Navbar setmode={setmode} styles={styles} mode={mode} />
+        <Navbar
+          setmode={setmode}
+          styles={styles}
+          mode={mode}
+          silver={silver}
+          gain={gain}
+        />
         <div className={styles.body}>
           <div className={styles.bodyform}>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                fetch_data(item, q);
+                setSilver(silverinpt.current.value);
+                if (silver != 0) {
+                  setGain(
+                    parseInt(silverinpt.current.value) - parseInt(silver)
+                  );
+                }
               }}
             >
               <input
                 type="text"
-                placeholder="Items"
-                value={item}
-                onChange={(e) => setItem(e.target.value)}
+                placeholder="Current Silver"
+                ref={silverinpt}
               />
-              <input
-                type="text"
-                placeholder="Quality from 1 to 5"
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-              />
-              <input type="submit" value="Search" />
-              {/* <textarea
-                placeholder="Json of Items from github"
-                value={area}
-                onChange={(e) => setarea(e.target.value)}
-              ></textarea> */}
+              <button>Submit</button>
             </form>
             <form onSubmit={(e) => e.preventDefault()}>
-              {/* <button onClick={() => get_items(JSON.parse(area))}>
-              Masse Search
-            </button> */}
               <input
                 type="text"
                 placeholder="From"
@@ -302,46 +295,16 @@ export default function Home() {
             })}
           </div>
         )}
-
-        {/* <div className={styles.home}>
-          <div className={styles.Market}>
-            <h1>Market</h1>
-            {market.map((d) => (
-              <div className={styles.MarketItem}>
-                <h3>Name : {d.item_id} </h3>
-                <h3>Quality : {d.quality} </h3>
-                <h3>Buy : {d.buy_price_min} </h3>
-                <h3
-                  onClick={() =>
-                    setProfite({ ...profite, sell: d.sell_price_min })
-                  }
-                >
-                  Sell : {d.sell_price_min}{" "}
-                </h3>
-              </div>
-            ))}
-          </div>
-          <div className={styles.BlackMarket}>
-            <h1>Black MArket</h1>
-            {bmarket.map((d) => (
-              <div className={styles.MarketItem}>
-                <h3>Name : {d.item_id} </h3>
-                <h3>Quality : {d.quality} </h3>
-                <h3
-                  onClick={() =>
-                    setProfite({ ...profite, buy: d.buy_price_max })
-                  }
-                >
-                  Buy : {d.buy_price_max}{" "}
-                </h3>
-                <h3>Sell : {d.sell_price_min} </h3>
-              </div>
-            ))}
-          </div>
-        </div>
-       */}
       </div>
       <Toaster />
     </div>
   );
 }
+Home.getInitialProps = ({ req }) => {
+  const cookies = parseCookies(req);
+
+  return {
+    silverValue: cookies.Silver,
+    gainValue: cookies.Gain,
+  };
+};
